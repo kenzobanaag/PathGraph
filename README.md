@@ -18,13 +18,13 @@ locationCallback = object : LocationCallback() {
     
     locationResult ?: return
     for(location in locationResult.locations) {
-      pathBuilder.logLocation(location)
+      pathBuilder.logLocation(location) //add this line to the location callback to log all location updates
     }
   }
 }
 
 mDrawPathBtn.setOnClickListener {
-  mPathGraph.points = pathBuilder.buildPath()
+  mPathGraph.points = pathBuilder.buildPath() //draw path to graph when done listening for location updates
 }
 
 ```
