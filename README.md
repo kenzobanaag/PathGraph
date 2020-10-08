@@ -1,6 +1,8 @@
 # PathGraph
 [![](https://jitpack.io/v/kenzobanaag/PathGraph.svg)](https://jitpack.io/#kenzobanaag/PathGraph)
 
+Path Graph is an android library that uses Location updates to build a path graph.
+
 ## Usage
 
 ```kotlin
