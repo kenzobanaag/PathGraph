@@ -1,0 +1,3 @@
+include ':pathgraph'
+include ':app'
+rootProject.name = "PathGraph"
