@@ -15,6 +15,12 @@ import kotlin.math.abs
 
 /*
 * fixme: make path and paint properties so the values can be changed.
+*
+* todo: add comments, add tests, fix code
+*
+* need to do tests that have like 500 locations.
+*
+* I just dont know how to mock 500 locations, i can do it manually but that takes too long
 * */
 class PathGraph(context : Context, attrs : AttributeSet) : View(context, attrs){
     lateinit var points : List<PathPoint>
@@ -43,11 +49,11 @@ class PathGraph(context : Context, attrs : AttributeSet) : View(context, attrs){
         paint.pathEffect = composePathEffect
     }
 
-    fun setPathColor(color : Int) { paint.color = color }
+    fun setPathColor(color : Int) { paint.color = ContextCompat.getColor(context,color) }
 
     fun setPathColor(gradient : Shader) { paint.shader = gradient }
 
-    fun setBackground(color : Int) { this.setBackgroundColor(color) }
+    fun setBackground(color : Int) { this.setBackgroundColor(ContextCompat.getColor(context,color)) }
 
     /*
     * Description: This will scale the picture to fit the box perfectly
