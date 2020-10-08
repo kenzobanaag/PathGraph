@@ -8,7 +8,6 @@ import java.util.*
 * Creates a path from locations.
 * */
 class PathBuilder : IPathBuilder{
-    //last thing we want to call
     private val path = LinkedList<PathPoint>()
     private lateinit var firstLocation : Location
 
