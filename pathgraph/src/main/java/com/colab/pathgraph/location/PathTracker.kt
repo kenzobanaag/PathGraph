@@ -67,6 +67,8 @@ class PathTracker : IPathBuilder, IRunTracker{
     * note: This method assumes that we don't stop logging locations.
     * */
     override fun getTime(): Long {
+        if(endTime.compareTo(0) == 0) //if timer has not stopped yet. Just return 1 second
+            return 1
         return (endTime - startTime) / MILLISECONDS
     }
 }
