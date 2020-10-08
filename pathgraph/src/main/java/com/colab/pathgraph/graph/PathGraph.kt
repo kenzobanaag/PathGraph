@@ -3,6 +3,7 @@ package com.colab.pathgraph.graph
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.colab.pathgraph.R
@@ -33,6 +34,7 @@ class PathGraph(context : Context, attrs : AttributeSet) : View(context, attrs){
     companion object {
         //we dont want to hit borders so we want to subtract the stroke width to the width and height of the view.
         private const val STROKE_WIDTH = 50f
+        private const val OFFSET = STROKE_WIDTH * 3 //increase multiplier to increase box clearance
     }
 
     init {
@@ -51,11 +53,11 @@ class PathGraph(context : Context, attrs : AttributeSet) : View(context, attrs){
     * Description: This will scale the picture to fit the box perfectly
     *              If the path is too small, scale to become bigger, if the path is too big, scale to get it smaller
     * */
-    fun scale() {
+    private fun scale() {
         calculateBounds()
 
-        val scalerX = graphWidth / width
-        val scalerY = graphHeight / height
+        val scalerX = (width - OFFSET) / graphWidth
+        val scalerY = (height - OFFSET) / graphHeight
 
         for(index in points.indices) {
             points[index].x = (scalerX * points[index].x)
@@ -68,14 +70,12 @@ class PathGraph(context : Context, attrs : AttributeSet) : View(context, attrs){
     *
     * note: We need the center of the dimensions of our screen.
     * */
-    fun translate() {
+    private fun translate() {
         calculateBounds()
 
-        val desiredPoint = PathPoint(graphHeight / 2, graphWidth / 2)
+        val desiredPoint = PathPoint((width / 2).toFloat(), (height / 2).toFloat())
         val point = PathPoint(midX,midY)
-
         val translationPoint = CoordinateUtil.computeTranslationPoint(point, desiredPoint)
-
 
         for(index in points.indices) {
             val locationPoint = PathPoint(points[index].x, points[index].y)
@@ -89,31 +89,31 @@ class PathGraph(context : Context, attrs : AttributeSet) : View(context, attrs){
     * Needs to be called before a translation or scale call is made.
     * */
     private fun calculateBounds() {
-        if(::points.isInitialized && points.size > 1) {//we need at least 2 points to create a path
-            var maxX = points[0].x
-            var maxY = points[0].y
-            var minX = points[0].x
-            var minY = points[0].y
+        var maxX = points[0].x
+        var maxY = points[0].y
+        var minX = points[0].x
+        var minY = points[0].y
 
-            for(index in points.indices) {
-                maxX = max(points[index].x, maxX)
-                maxY = max(points[index].y, maxY)
-                minX = min(points[index].x, minX)
-                minY = min(points[index].y, minY)
-            }
-
-            graphWidth = abs(maxX) + abs(minX)
-            graphHeight = abs(maxY) + abs(minY)
-
-            midX = maxX - (graphWidth/2)
-            midY = maxY - (graphHeight/2)
+        for(index in points.indices) {
+            maxX = max(points[index].x, maxX)
+            maxY = max(points[index].y, maxY)
+            minX = min(points[index].x, minX)
+            minY = min(points[index].y, minY)
         }
+
+        graphWidth = abs(maxX) + abs(minX)
+        graphHeight = abs(maxY) + abs(minY)
+
+        midX = maxX - (graphWidth/2)
+        midY = maxY - (graphHeight/2)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.apply {
             if(::points.isInitialized && points.size > 1) {//we need at least 2 points to create a path
+                scale()
+                translate()
                 drawPath(canvas)
             }
         }
