@@ -18,7 +18,7 @@ class PathTracker : IPathBuilder, IRunTracker{
     companion object {
         private const val MILES_PER_METER = 0.000621371
         private const val MILLISECONDS = 1000
-        private const val SECONDS_PER_HOUR = 3600
+        private const val SECONDS_PER_HOUR : Double = 3600.0 //needs to be a double so we dont lose information when dividing
     }
 
     override fun buildPath(): List<PathPoint> {
