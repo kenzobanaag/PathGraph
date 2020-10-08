@@ -18,7 +18,7 @@ class PathTracker : IPathBuilder, IRunTracker{
     companion object {
         private const val MILES_PER_METER = 0.000621371
         private const val MILLISECONDS = 1000
-        private const val SECONDS_PER_HOUR = 3600
+        private const val SECONDS_PER_HOUR : Double = 3600.0 //needs to be a double so we dont lose information when dividing
     }
 
     override fun buildPath(): List<PathPoint> {
@@ -67,6 +67,8 @@ class PathTracker : IPathBuilder, IRunTracker{
     * note: This method assumes that we don't stop logging locations.
     * */
     override fun getTime(): Long {
+        if(endTime.compareTo(0) == 0) //if timer has not stopped yet. Just return 1 second
+            return 1
         return (endTime - startTime) / MILLISECONDS
     }
 }
