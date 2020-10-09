@@ -1,17 +1,17 @@
 package com.colab.pathgraph.location
 
 import android.location.Location
-import com.colab.pathgraph.model.PathPoint
+import com.colab.pathgraph.model.Point
 import java.util.*
 
 /*
 * Creates a path from locations.
 * */
-class PathBuilder : IPathBuilder{
-    private val path = LinkedList<PathPoint>()
+class PathLog : IPathLog{
+    private val path = LinkedList<Point>()
     private lateinit var firstLocation : Location
 
-    override fun buildPath() : List<PathPoint> {
+    override fun getLogs() : List<Point> {
         return path
     }
 

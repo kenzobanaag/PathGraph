@@ -3,12 +3,12 @@ package com.colab.pathgraph.graph
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.colab.pathgraph.R
 import com.colab.pathgraph.location.CoordinateUtil
 import com.colab.pathgraph.model.PathPoint
+import com.colab.pathgraph.model.Point
 import java.lang.Float.max
 import java.lang.Float.min
 import kotlin.math.abs
@@ -23,7 +23,7 @@ import kotlin.math.abs
 * I just dont know how to mock 500 locations, i can do it manually but that takes too long
 * */
 class PathGraph(context : Context, attrs : AttributeSet) : View(context, attrs){
-    lateinit var points : List<PathPoint>
+    lateinit var points : List<Point>
     private val path = Path()
     private val paint = Paint().apply {
         color = ContextCompat.getColor(context, R.color.colorAccent)

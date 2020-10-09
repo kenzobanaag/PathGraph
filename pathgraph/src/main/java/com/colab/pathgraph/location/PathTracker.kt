@@ -1,14 +1,14 @@
 package com.colab.pathgraph.location
 
 import android.location.Location
-import com.colab.pathgraph.model.PathPoint
+import com.colab.pathgraph.model.Point
 import java.util.*
 
 /*
 * Keeps track of path, distance, speed, time
 * */
-class PathTracker : IPathBuilder, IRunTracker{
-    private val path = LinkedList<PathPoint>()
+class PathTracker : IPathLog, IRunTracker{
+    private val path = LinkedList<Point>()
     private lateinit var firstLocation : Location
     private lateinit var previousLocation : Location
     private var startTime : Long = 0L
@@ -21,7 +21,7 @@ class PathTracker : IPathBuilder, IRunTracker{
         private const val SECONDS_PER_HOUR : Double = 3600.0 //needs to be a double so we dont lose information when dividing
     }
 
-    override fun buildPath(): List<PathPoint> {
+    override fun getLogs(): List<Point> {
         endTime = System.currentTimeMillis()  //stop time
         return path
     }
@@ -50,6 +50,8 @@ class PathTracker : IPathBuilder, IRunTracker{
     * */
     override fun getSpeed(timeSeconds: Long): Double {
         //calculate speed by using long time and distance
+        if(timeSeconds < 0)
+            return 0.0
         return getDistance() / (timeSeconds / SECONDS_PER_HOUR)
     }
 
@@ -72,7 +74,7 @@ class PathTracker : IPathBuilder, IRunTracker{
         return (endTime - startTime) / MILLISECONDS
     }
 
-    override fun recalculateDistance(points: List<PathPoint>) {
+    override fun recalculateDistance(points: List<Point>) {
         estimatedDistance = 0.0
         for(index in points.indices) {
             estimatedDistance += points[index].m

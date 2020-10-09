@@ -1,9 +1,9 @@
 package com.colab.pathgraph.location
 
 import android.location.Location
-import com.colab.pathgraph.model.PathPoint
+import com.colab.pathgraph.model.Point
 
-interface IPathBuilder {
-    fun buildPath() : List<PathPoint>
+interface IPathLog {
+    fun getLogs() : List<Point>
     fun logLocation(location : Location)
 }
