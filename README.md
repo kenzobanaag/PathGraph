@@ -11,20 +11,20 @@ private lateinit var locationCallback: LocationCallback
 private lateinit var mDrawPathBtn : Button
 private lateinit var mPathGraph : PathGraph
 
-private val pathBuilder = PathBuilder()
+private val pathLog = PathLog()
 
 locationCallback = object : LocationCallback() {
   override fun onLocationResult(locationResult : LocationResult?) {
     
     locationResult ?: return
     for(location in locationResult.locations) {
-      pathBuilder.logLocation(location) //add this line to the location callback to log all location updates
+      pathLog.logLocation(location) //add this line to the location callback to log all location updates
     }
   }
 }
 
 mDrawPathBtn.setOnClickListener {
-  mPathGraph.points = pathBuilder.buildPath() //draw path to graph when done listening for location updates
+  mPathGraph.points = pathLog.getLogs() //draw path to graph when done listening for location updates
 }
 
 ```
