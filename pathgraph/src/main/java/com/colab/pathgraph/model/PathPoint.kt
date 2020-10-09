@@ -8,5 +8,7 @@ package com.colab.pathgraph.model
 data class PathPoint(
     override var x : Float,
     override var y : Float,
-    override var m : Float = 0f) : Point{
+    override var m : Float = 0f,
+    override val id : Int = 0,
+    ) : Point{
 }
